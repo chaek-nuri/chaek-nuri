@@ -1,0 +1,418 @@
+/* 기본 스타일 */
+    body {
+      font-family: 'Noto Sans KR', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    header, nav, footer {
+      background-color: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 15px 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* 배너 */
+    .banner {
+      width: 100%;  
+      background-color: #0078d7;
+      color: white;
+      top: 0;
+      text-align: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    /* 헤더 스타일 */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+    }
+
+    .logo {
+      font-size: 2.4em;
+      font-weight: 700;
+      color: #0078d7;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* 검색창 */
+    .search-container {
+      flex-grow: 1;
+      margin: 0 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-container input {
+      width: 60%;
+      padding: 10px 15px;
+      border: 1px solid #bbb;
+      border-radius: 4px 0 0 4px;
+      font-size: 1em;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-container input:focus {
+      border-color: #0078d7;
+    }
+
+    .search-container button {
+      padding: 11px 18px;
+      border: 1px solid #0078d7;
+      background-color: #0078d7;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 0 4px 4px 0;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-container button:hover {
+      background-color: #005fa3;
+    }
+
+    /* 사용자 버튼 그룹 */
+    .user-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .user-buttons button {
+      background-color: transparent;
+      border: 1px solid #0078d7;
+      color: #0078d7;
+      padding: 8px 16px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .user-buttons button:hover {
+      background-color: #0078d7;
+      color: white;
+    }
+
+    /* 카트 버튼 */
+    #cartBtn {
+      position: relative;
+    }
+    #cartCount {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #e63946;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.8em;
+    }
+
+    /* 내 정보 버튼은 로그인 후에만 보임 */
+    #myInfoBtn {
+      display: none;
+    }
+
+    /* 내 정보 & 설정 모달 */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 8px;
+      width: 450px;
+      max-width: 95%;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      padding: 20px 30px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h3 {
+      margin-top: 0;
+      font-weight: 700;
+      color: #0078d7;
+    }
+
+    .modal button.close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 1.4em;
+      cursor: pointer;
+      color: #999;
+      transition: color 0.3s ease;
+    }
+
+    .modal button.close-btn:hover {
+      color: #0078d7;
+    }
+
+    /* 로그인 폼 스타일 */
+    #loginPopup input[type="text"],
+    #loginPopup input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    #loginPopup label {
+      font-size: 0.9em;
+      user-select: none;
+    }
+
+    #loginPopup button.login-submit {
+      width: 100%;
+      background-color: #0078d7;
+      border: none;
+      padding: 12px 0;
+      color: white;
+      font-weight: 700;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    #loginPopup button.login-submit:hover {
+      background-color: #005fa3;
+    }
+
+    /* 네비게이션 메뉴 */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 0;
+      font-weight: 600;
+      font-size: 1.1em;
+      flex-wrap: wrap;
+      background: #fafafa;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+
+    nav .category {
+      cursor: pointer;
+      color: #0078d7;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    nav .category:hover {
+      background-color: #e6f0fb;
+    }
+
+    nav select {
+      border-radius: 4px;
+      padding: 5px 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.3s ease;
+    }
+
+    nav select:hover, nav select:focus {
+      border-color: #0078d7;
+      outline: none;
+    }
+
+    /* 도서 리스트 스타일 */
+    section {
+      max-width: 1200px;
+      margin: 20px auto 40px;
+      padding: 0 20px;
+    }
+
+    h2.section-title {
+      margin-bottom: 15px;
+      font-size: 1.6em;
+      border-bottom: 3px solid #0078d7;
+      padding-bottom: 6px;
+      color: #0078d7;
+    }
+
+    .book-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+    }
+
+    .book {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      border: 1px solid #ddd;
+    }
+
+    .book:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+
+    .book img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .book-info {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .book-info h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.2em;
+      color: #0078d7;
+    }
+
+    .book-info p {
+      margin: 4px 0;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .book-info .price {
+      font-weight: 700;
+      margin-top: 10px;
+      color: #e63946;
+      font-size: 1.1em;
+    }
+
+    .add-cart-btn {
+      margin-top: 10px;
+      padding: 8px;
+      border: none;
+      background-color: #a3c4f3;
+      color: white;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .add-cart-btn:hover {
+      background-color: #7faeed;
+    }
+
+    /* 푸터 스타일 */
+    footer {
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+      padding: 30px 50px;
+      font-size: 0.9em;
+      color: #666;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* 모달 내 도서 상세정보 스타일 */
+    .modal-book {
+      display: flex;
+      gap: 15px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+    }
+
+    .modal-book img {
+      width: 120px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .modal-book-info {
+      flex-grow: 1;
+    }
+
+    .modal-book-info h4 {
+      margin: 0 0 10px 0;
+      color: #0078d7;
+    }
+
+    .modal-book-info p {
+      margin: 4px 0;
+      font-size: 0.95em;
+      color: #444;
+    }
+
+    .modal-book-info .price {
+      font-weight: 700;
+      color: #e63946;
+      font-size: 1.05em;
+      margin-top: 8px;
+    }
+
+    /* 버튼 그룹 모달 하단 */
+    .modal-footer-btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .modal-footer-btns button {
+      padding: 8px 16px;
+      border: none;
+      background-color: #0078d7;
+      color: white;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-footer-btns button:hover {
+      background-color: #005fa3;
+    }
+
+    /* 반응형 */
+    @media screen and (max-width: 700px) {
+      .book-list {
+        justify-content: center;
+      }
+
+      .search-container input {
+        width: 70%;
+      }
+    }

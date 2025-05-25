@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bluebook | Online Bookstore</title>
+  <style>
+    /* 기본 스타일 */
+    body {
+      font-family: 'Noto Sans KR', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f6ff;
+      color: #333;
+    }
+
+    header, nav, footer {
+      background-color: #fff;
+      border-bottom: 1px solid #dde7f5;
+      padding: 15px 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* 헤더 스타일 */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+    }
+
+    .logo {
+      font-size: 2.4em;
+      font-weight: 700;
+      color: #a3c4f3;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* 검색창 */
+    .search-container {
+      flex-grow: 1;
+      margin: 0 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-container input {
+      width: 60%;
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px;
+      font-size: 1em;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-container input:focus {
+      border-color: #a3c4f3;
+    }
+
+    .search-container button {
+      padding: 11px 18px;
+      border: 1px solid #a3c4f3;
+      background-color: #a3c4f3;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 0 4px 4px 0;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-container button:hover {
+      background-color: #7faeed;
+    }
+
+    /* 사용자 버튼 그룹 */
+    .user-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .user-buttons button {
+      background-color: transparent;
+      border: 1px solid #a3c4f3;
+      color: #a3c4f3;
+      padding: 8px 16px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .user-buttons button:hover {
+      background-color: #a3c4f3;
+      color: white;
+    }
+
+    /* 카트 버튼 */
+    #cartBtn {
+      position: relative;
+    }
+    #cartCount {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #e63946;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.8em;
+    }
+
+    /* 내 정보 버튼은 로그인 후에만 보임 */
+    #myInfoBtn {
+      display: none;
+    }
+
+    /* 모달 공통 */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 8px;
+      width: 450px;
+      max-width: 95%;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      padding: 20px 30px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h3 {
+      margin-top: 0;
+      font-weight: 700;
+      color: #a3c4f3;
+    }
+
+    .modal button.close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 1.4em;
+      cursor: pointer;
+      color: #999;
+      transition: color 0.3s ease;
+    }
+
+    .modal button.close-btn:hover {
+      color: #a3c4f3;
+    }
+
+    /* 네비게이션 메뉴 */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 0;
+      font-weight: 600;
+      font-size: 1.1em;
+      flex-wrap: wrap;
+      background: #eef5ff;
+      border-top: 1px solid #dde7f5;
+      border-bottom: 1px solid #dde7f5;
+    }
+
+    nav .category {
+      cursor: pointer;
+      color: #a3c4f3;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    nav .category:hover {
+      background-color: #d3e4ff;
+    }
+
+    /* 도서 리스트 스타일 */
+    section {
+      max-width: 1200px;
+      margin: 20px auto 40px;
+      padding: 0 20px;
+    }
+
+    h2.section-title {
+      margin-bottom: 15px;
+      font-size: 1.6em;
+      border-bottom: 3px solid #a3c4f3;
+      padding-bottom: 6px;
+      color: #a3c4f3;
+    }
+
+    .book-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+    }
+
+    .book {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      border: 1px solid #ddd;
+    }
+
+    .book:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+
+    .book img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .book-info {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .book-info h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.2em;
+      color: #a3c4f3;
+    }
+
+    .book-info p {
+      margin: 4px 0;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .book-info .price {
+      font-weight: 700;
+      margin-top: 10px;
+      color: #e63946;
+      font-size: 1.1em;
+    }
+
+    .add-cart-btn {
+      margin-top: 10px;
+      padding: 8px;
+      border: none;
+      background-color: #a3c4f3;
+      color: white;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .add-cart-btn:hover {
+      background-color: #7faeed;
+    }
+
+    /* 푸터 스타일 */
+    footer {
+      background-color: #fff;
+      border-top: 1px solid #dde7f5;
+      padding: 30px 50px;
+      font-size: 0.9em;
+      color: #666;
+      text-align: center;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- 헤더 영역: 로고, 검색, 사용자 버튼 -->
+  <header>
+    <div class="logo" onclick="location.reload()">Bluebook</div>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="책 제목을 검색하세요" />
+      <button id="searchBtn" onclick="openSearchModal()">검색</button>
+    </div>
+    <div class="user-buttons">
+      <button id="loginBtn" onclick="openLoginModal()">로그인</button>
+      <button id="logoutBtn" style="display:none;" onclick="logout()">로그아웃</button>
+      <button id="myInfoBtn" onclick="openMyInfoModal()">나의 정보</button>
+      <button id="cartBtn" onclick="openCartModal()">Cart <span id="cartCount">0</span></button>
+    </div>
+  </header>
+
+  <!-- 네비게이션: 카테고리 메뉴 -->
+  <nav>
+    <div class="category" onclick="openCategoryModal('소설')">소설</div>
+    <div class="category" onclick="openCategoryModal('자기계발')">자기계발</div>
+    <div class="category" onclick="openCategoryModal('인문학')">인문학</div>
+    <div class="category" onclick="openCategoryModal('컴퓨터/IT')">컴퓨터/IT</div>
+    <div class="category" onclick="openCategoryModal('어린이')">어린이</div>
+    <div class="category" onclick="openCategoryModal('경제/경영')">경제/경영</div>
+  </nav>
+
+  <!-- 베스트셀러 섹션 -->
+  <section>
+    <h2 class="section-title">Bestsellers</h2>
+    <div class="book-list" id="bestsellerList"></div>
+  </section>
+
+  <!-- 추천 도서 섹션 -->
+  <section>
+    <h2 class="section-title">추천 도서</h2>
+    <div class="book-list" id="mainBookList"></div>
+  </section>
+
+  <!-- 모달들 (검색, 카테고리, 로그인, 내정보, 카트) -->
+  <div class="modal-overlay" id="searchModal"> ... </div>
+  <div class="modal-overlay" id="categoryModal"> ... </div>
+  <div class="modal-overlay" id="loginModal"> ... </div>
+  <div class="modal-overlay" id="myInfoModal"> ... </div>
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeCartModal()">×</button>
+      <h3>장바구니</h3>
+      <div id="cartItems"></div>
+      <div style="margin-top:15px; text-align:right;">
+        <strong>총 합계: <span id="cartTotal">0</span>원</strong>
+      </div>
+      <div class="modal-footer-btns" style="margin-top:15px;">
+        <button onclick="checkout()">구매하기</button>
+        <button onclick="closeCartModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 Bluebook. All rights reserved.</footer>
+
+<script>
+  const books = [
+    { id:1, title:"데미안", author:"헤르만 헤세", category:"소설", price:12000, img:"https://image.yes24.com/goods/97903156/XL", description:"자아를 찾아가는 성장 소설의 대표작.", bestseller:false, recommended:true },
+    { id:2, title:"아침의 피아노", author:"김영하", category:"소설", price:15000, img:"https://image.yes24.com/goods/10333668/XL", description:"감성 가득한 단편 소설집.", bestseller:false, recommended:false },
+    { id:8, title:"노르웨이의 숲", author:"무라카미 하루키", category:"소설", price:14000, img:"https://via.placeholder.com/150?text=노르웨이의+숲", description:"청춘의 고독과 사랑을 그린 소설.", bestseller:true, recommended:false },
+    { id:9, title:"해리 포터와 마법사의 돌", author:"J.K. 롤링", category:"소설", price:20000, img:"https://via.placeholder.com/150?text=해리+포터", description:"마법 세계의 시작을 알린 판타지 소설.", bestseller:true, recommended:true },
+    { id:10, title:"채식주의자", author:"한강", category:"소설", price:13000, img:"https://via.placeholder.com/150?text=채식주의자", description:"강렬한 상징으로 한국 사회를 비판.", bestseller:false, recommended:false },
+    { id:11, title:"82년생 김지영", author:"조남주", category:"소설", price:15000, img:"https://via.placeholder.com/150?text=82년생+김지영", description:"한국 여성의 삶을 그린 소설.", bestseller:true, recommended:false },
+
+    { id:3, title:"미움받을 용기", author:"기시미 이치로", category:"자기계발", price:13000, img:"https://image.yes24.com/goods/42983090/XL", description:"행복한 삶을 위한 아들러 심리학 입문서.", bestseller:false, recommended:true },
+    { id:12, title:"아침형 인간", author:"하루 1시간", category:"자기계발", price:16000, img:"https://via.placeholder.com/150?text=아침형+인간", description:"생산성을 높이는 습관 형성 가이드.", bestseller:false, recommended:false },
+    { id:13, title:"그릿", author:"앤절라 더크워스", category:"자기계발", price:18000, img:"https://via.placeholder.com/150?text=그릿", description:"성공을 이끄는 집중력과 끈기에 대하여.", bestseller:true, recommended:false },
+    { id:14, title:"원씽", author:"게리 켈러", category:"자기계발", price:17000, img:"https://via.placeholder.com/150?text=원씽", description:"가장 중요한 것에 집중하는 법.", bestseller:false, recommended:false },
+    { id:15, title:"작은 습관의 힘", author:"제임스 클리어", category:"자기계발", price:19000, img:"https://via.placeholder.com/150?text=작은+습관", description:"습관 변화의 심리학과 실행 전략.", bestseller:false, recommended:false },
+
+    { id:4, title:"아가페 인문학", author:"김철수", category:"인문학", price:18000, img:"https://via.placeholder.com/150?text=아가페+인문학", description:"사랑과 인문학의 만남을 다룬 책.", bestseller:false, recommended:false },
+    { id:16, title:"총, 균, 쇠", author:"재레드 다이아몬드", category:"인문학", price:22000, img:"https://via.placeholder.com/150?text=총,+균,+쇠", description:"문명의 발전을 과학적으로 분석.", bestseller:true, recommended:false },
+    { id:17, title:"사피엔스", author:"유발 하라리", category:"인문학", price:21000, img:"https://via.placeholder.com/150?text=사피엔스", description:"인류 역사를 통찰하는 통합적 시각.", bestseller:true, recommended:true },
+    { id:18, title:"호모 데우스", author:"유발 하라리", category:"인문학", price:20000, img:"https://via.placeholder.com/150?text=호모+데우스", description:"미래 인류의 가능성 탐구.", bestseller:false, recommended:false },
+    { id:19, title:"이기적 유전자", author:"리처드 도킨스", category:"인문학", price:19000, img:"https://via.placeholder.com/150?text=이기적+유전자", description:"유전자 중심의 진화론 설명.", bestseller:false, recommended:false },
+
+    { id:5, title:"HTML 웹 프로그래밍 입문", author:"한빛아카데미", category:"컴퓨터/IT", price:25000, img:"https://via.placeholder.com/150?text=HTML+웹+프로그래밍", description:"HTML과 웹 프로그래밍 기초 입문서.", bestseller:false, recommended:false },
+    { id:20, title:"자바스크립트 완벽 가이드", author:"데이빗 플래너건", category:"컴퓨터/IT", price:28000, img:"https://via.placeholder.com/150?text=JS+완벽+가이드", description:"JS 언어의 모든 것을 담은 레퍼런스.", bestseller:false, recommended:true },
+    { id:21, title:"클린 코드", author:"로버트 C. 마틴", category:"컴퓨터/IT", price:30000, img:"https://via.placeholder.com/150?text=클린+코드", description:"읽기 쉽고 유지보수 좋은 코드를 위한 원칙.", bestseller:false, recommended:false },
+    { id:22, title:"알고리즘 문제 해결 전략", author:"구종만", category:"컴퓨터/IT", price:32000, img:"https://via.placeholder.com/150?text=알고리즘+전략", description:"다양한 알고리즘 기법과 풀이 방법.", bestseller:true, recommended:false },
+    { id:23, title:"모던 C++", author:"벤 스코웰", category:"컴퓨터/IT", price:27000, img:"https://via.placeholder.com/150?text=모던+C++","description":"C++11 이후 최신 문법과 활용.",bestseller:false,recommended:false},
+    { id:24, title:"파이썬 라이브러리를 활용한 머신러닝", author:"세바스찬 라시카", category:"컴퓨터/IT", price:35000, img:"https://via.placeholder.com/150?text=파이썬+ML+라이브러리", description:"scikit-learn 중심 실습서.", bestseller:false, recommended:false },
+
+    { id:6, title:"어린이 과학 탐험", author:"어린이 과학 연구소", category:"어린이", price:10000, img:"https://via.placeholder.com/150?text=어린이+과학+탐험",description:"재미있고 신나는 어린이 과학 이야기.",bestseller:false,recommended:false},
+    { id:25, title:"코딩 호랑이", author:"박코더", category:"어린이", price:12000, img:"https://via.placeholder.com/150?text=코딩+호랑이", description:"아이들을 위한 쉽고 재미있는 코딩 학습.",bestseller:false,recommended:true},
+    { id:26, title:"마법 천자문", author:"유대영", category:"어린이", price:9000, img:"https://via.placeholder.com/150?text=마법+천자문", description:"한자를 마법 이야기로 풀어낸 학습 만화.",bestseller:false,recommended:false},
+    { id:27, title:"엄마 까투리 과학동화", author:"어린이 과학 연구소", category:"어린이", price:11000, img:"https://via.placeholder.com/150?text=엄마+까투리", description:"과학 원리를 동화로 쉽게 설명.",bestseller:false,recommended:false},
+    { id:28, title:"구름빵", author:"백희나", category:"어린이", price:10000, img:"https://via.placeholder.com/150?text=구름빵", description:"환상적인 그림과 따뜻한 이야기.",bestseller:true,recommended:false},
+
+    { id:7, title:"경제학 원론", author:"박재현", category:"경제/경영", price:22000, img:"https://via.placeholder.com/150?text=경제학+원론",description:"경제학의 기본 개념과 원리를 정리한 책.",bestseller:false,recommended:false},
+    { id:29, title:"부의 인문학", author:"홍성호", category:"경제/경영", price:18000, img:"https://via.placeholder.com/150?text=부의+인문학",description:"인문학 시각으로 풀어본 부의 법칙.",bestseller:true,recommended:false},
+    { id:30, title:"경제 지표 읽는 법", author:"이성훈", category:"경제/경영", price:20000, img:"https://via.placeholder.com/150?text=경제+지표",description:"실전에서 쓰이는 주요 지표 해설.",bestseller:false,recommended:false},
+    { id:31, title:"블루오션 전략", author:"김위찬", category:"경제/경영", price:24000, img:"https://via.placeholder.com/150?text=블루오션+전략",description:"경쟁 없는 시장을 창출하는 전략.",bestseller:false,recommended:false},
+    { id:32, title:"하버드 경영전략", author:"아일린 슈랭거", category:"경제/경영", price:26000, img:"https://via.placeholder.com/150?text=하버드+경영전략",description:"하버드 사례로 배우는 전략 기법.",bestseller:false,recommended:false}
+  ];
+
+  let currentUser = null;
+  let cart = [];
+
+  function updateCartCount() {
+    document.getElementById('cartCount').textContent = cart.length;
+  }
+
+  function renderSection(listId, filterFn) {
+    const container = document.getElementById(listId);
+    container.innerHTML = '';
+    books.filter(filterFn).forEach(book => {
+      const bookDiv = document.createElement('div');
+      bookDiv.className = 'book';
+      bookDiv.innerHTML = `
+        <img src="${book.img}" alt="${book.title}" />
+        <div class="book-info">
+          <h3>${book.title}</h3>
+          <p>저자: ${book.author}</p>
+          <p>카테고리: ${book.category}</p>
+          <p class="price">${book.price.toLocaleString()}원</p>
+          <button class="add-cart-btn" onclick="addToCart(${book.id})">장바구니 담기</button>
+        </div>`;
+      container.appendChild(bookDiv);
+    });
+  }
+
+  function renderBookList() {
+    renderSection('mainBookList', book => book.recommended);
+    renderSection('bestsellerList', book => book.bestseller);
+  }
+
+  function addToCart(id) {
+    const book = books.find(b => b.id === id);
+    if (book) cart.push(book);
+    updateCartCount();
+  }
+
+  function openCartModal() {
+    renderCartModal();
+    document.getElementById('cartModal').style.display = 'flex';
+  }
+  function closeCartModal() { document.getElementById('cartModal').style.display = 'none'; }
+
+  function renderCartModal() {
+    const list = document.getElementById('cartItems');
+    const totalElem = document.getElementById('cartTotal');
+    list.innerHTML = '';
+    let sum = 0;
+    cart.forEach((b,i) => {
+      const div = document.createElement('div');
+      div.textContent = `${b.title} - ${b.price.toLocaleString()}원`;
+      list.appendChild(div);
+      sum += b.price;
+    });
+    totalElem.textContent = sum.toLocaleString();
+  }
+
+  function checkout() {
+    if (!currentUser) { alert('로그인 후 구매 가능합니다.'); return; }
+    if (cart.length === 0) { alert('장바구니가 비어 있습니다.'); return; }
+    if (confirm(`${cart.length}권의 도서를 구매하시겠습니까?`)) {
+      cart = []; updateCartCount(); closeCartModal(); alert('구매가 완료되었습니다!');
+    }
+  }
+
+  window.onload = function() {
+    renderBookList(); updateCartCount();
+  };
+</script>
+</body>
+</html>
+
