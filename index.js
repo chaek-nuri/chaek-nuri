@@ -33,7 +33,7 @@
     { id:28, title:"구름빵", author:"백희나", category:"어린이", price:10000, img:"https://via.placeholder.com/150?text=구름빵", description:"환상적인 그림과 따뜻한 이야기.",bestseller:true,recommended:false},
 
     { id:7, title:"경제학 원론", author:"박재현", category:"경제/경영", price:22000, img:"https://via.placeholder.com/150?text=경제학+원론",description:"경제학의 기본 개념과 원리를 정리한 책.",bestseller:false,recommended:false},
-    { id:29, title:"부의 인문학", author:"홍성호", category:"경제/경영", price:18000, img:"https://via.placeholder.com/150?text=부의+인문학",description:"인문학 시각으로 풀어본 부의 법칙.",bestseller:true,recommended:false},
+    { id:29, title:"부의 인문학", author:"홍성호", category:"경제/경영", price:18000, img:"https://via.placeholder.com/150?text=부의+인문학",description:"인문학 시각으로 풀어본 부의 법칙.",bestseller:false,recommended:false},
     { id:30, title:"경제 지표 읽는 법", author:"이성훈", category:"경제/경영", price:20000, img:"https://via.placeholder.com/150?text=경제+지표",description:"실전에서 쓰이는 주요 지표 해설.",bestseller:false,recommended:false},
     { id:31, title:"블루오션 전략", author:"김위찬", category:"경제/경영", price:24000, img:"https://via.placeholder.com/150?text=블루오션+전략",description:"경쟁 없는 시장을 창출하는 전략.",bestseller:false,recommended:false},
     { id:32, title:"하버드 경영전략", author:"아일린 슈랭거", category:"경제/경영", price:26000, img:"https://via.placeholder.com/150?text=하버드+경영전략",description:"하버드 사례로 배우는 전략 기법.",bestseller:false,recommended:false}
@@ -151,35 +151,6 @@
   /* 검색 모달 닫기 */
   function closeSearchModal() {
     document.getElementById('searchModal').style.display = 'none';
-  }
-
-  /* ----------------------------------------------
-   * 카테고리 모달 열기: 해당 카테고리 도서만 필터링
-   * -------------------------------------------- */
-  function openCategoryModal(category) {
-    const titleElem = document.getElementById('categoryTitle');
-    const resultsContainer = document.getElementById('categoryResults');
-
-    titleElem.textContent = `${category} 도서 목록`;
-    resultsContainer.innerHTML = "";
-
-    // 카테고리 일치 도서만 필터링
-    const filteredBooks = books.filter(book => book.category === category);
-
-    if (filteredBooks.length === 0) {
-      resultsContainer.innerHTML = "<p>해당 카테고리의 도서가 없습니다.</p>";
-    } else {
-      filteredBooks.forEach(book => {
-        resultsContainer.appendChild(createBookDetailElement(book));
-      });
-    }
-
-    document.getElementById('categoryModal').style.display = 'flex';
-  }
-
-  /* 카테고리 모달 닫기 */
-  function closeCategoryModal() {
-    document.getElementById('categoryModal').style.display = 'none';
   }
 
   /* ----------------------------------------------
