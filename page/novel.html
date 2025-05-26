@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" /> <!-- 인코딩 방식 설정 -->
   <title>책누리</title>
-  <link rel="stylesheet" href="project.css">
+  <link rel="stylesheet" href="../index.css">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="project.js"></script>
+  <script src="../index.js"></script>
 </head>
 <body>  
 
@@ -16,7 +16,7 @@
     
   <!-- 헤더 영역: 로고, 검색, 사용자 버튼 -->
   <header>
-    <div class="logo"><a href="project.html">책누리</a></div>
+    <div class="logo"><a href="../index.html">책누리 | 소설</a></div>
     <div class="search-container">
       <input type="text" id="searchInput" placeholder="책 제목을 검색하세요" />
       <button id="searchBtn" onclick="openSearchModal()">검색</button>
@@ -30,19 +30,18 @@
 
   <!-- 네비게이션: 카테고리 메뉴 -->
   <nav>
-    <div class="category"><a href="page_novel.html" class="category">소설</a></div>
-    <div class="category"><a href="page_self-improvement.html" class="category">자기계발</a></div>
-    <div class="category"><a href="page_humanities.html">인문학</a></div>
-    <div class="category"><a href="page_IT.html">컴퓨터/IT</a></div>
-    <div class="category"><a href="page_kid.html">어린이</a></div>
-    <div class="category"><a href="page_economy.html">경제/경영</a></div>
+    <div class="category"><a href="novel.html" class="category">소설</a></div>
+    <div class="category"><a href="self-improvement.html" class="category">자기계발</a></div>
+    <div class="category"><a href="humanities.html">인문학</a></div>
+    <div class="category"><a href="IT.html">컴퓨터/IT</a></div>
+    <div class="category"><a href="kid.html">어린이</a></div>
+    <div class="category"><a href="economy.html">경제/경영</a></div>
   </nav>
 
   <!-- 메인 도서 리스트 섹션 -->
-  <section id="categorySections">
+  <section>
     <h2 class="section-title">소설</h2>
-    <div class="book-list" id="category-소설">
-    <div class="category" ="openCategoryModal('소설')"></div>
+    <div class="book-list" id="novelBookList">
       <!-- JS가 도서 목록을 이곳에 렌더링 -->
     </div>
   </section>
@@ -54,17 +53,6 @@
       <h3>검색 결과</h3>
       <div id="searchResults">
         <!-- 검색된 도서 정보가 여기에 표시됩니다 -->
-      </div>
-    </div>
-  </div>
-
-  <!-- 카테고리별 도서 모달 -->
-  <div class="modal-overlay" id="categoryModal">
-    <div class="modal">
-      <button class="close-btn" onclick="closeCategoryModal()">×</button>
-      <h3 id="categoryTitle">카테고리</h3>
-      <div id="categoryResults">
-        <!-- 선택한 카테고리 도서가 여기에 표시됩니다 -->
       </div>
     </div>
   </div>

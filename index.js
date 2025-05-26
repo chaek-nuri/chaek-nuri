@@ -47,6 +47,8 @@
 
   function renderSection(listId, filterFn) {
     const container = document.getElementById(listId);
+    if (!container) return;
+
     container.innerHTML = '';
     books.filter(filterFn).forEach(book => {
       const bookDiv = document.createElement('div');
@@ -66,6 +68,7 @@
 
   function renderBookList() {
     renderSection('mainBookList', book => book.recommended);
+    renderSection('novelBookList', book => book.category === "소설");
     renderSection('bestsellerList', book => book.bestseller);
   }
 
@@ -103,10 +106,6 @@
     }
   }
 
-  window.onload = function() {
-    renderBookList(); updateCartCount();
-  };
-
   /* ----------------------------------------------
    * 로그인 상태 관리용 객체 (간단한 예제)
    * 실제 프로젝트에서는 보안 강화 필요
@@ -120,36 +119,6 @@
       { title: "미움받을 용기", dueDate: "2025-07-15" },
     ]
   };
-
-  /* ----------------------------------------------
-   * 초기 화면 도서 리스트 렌더링 함수
-   * -------------------------------------------- */
-  function renderBookList() {
-    const container = document.getElementById('mainBookList');
-    container.innerHTML = ""; // 기존 내용 제거
-    books.forEach(book => {
-      // 각 도서 카드 생성
-      const bookDiv = document.createElement('div');
-      bookDiv.className = 'book';
-      bookDiv.setAttribute('data-id', book.id);
-      bookDiv.innerHTML = `
-        <img src="${book.img}" alt="${book.title}" />
-        <div class="book-info">
-          <h3>${book.title}</h3>
-          <p>저자: ${book.author}</p>
-          <p>카테고리: ${book.category}</p>
-          <p class="price">${book.price.toLocaleString()}원</p>
-        </div>
-      `;
-
-      // 클릭 시 상세 모달 열기 (검색 결과, 카테고리와 동일 UI 활용 가능)
-      bookDiv.addEventListener('click', () => {
-        openBookDetailModal(book);
-      });
-
-      container.appendChild(bookDiv);
-    });
-  }
 
   /* ----------------------------------------------
    * 검색 모달 열기: 입력값 기준 책 제목 포함 여부로 필터링
