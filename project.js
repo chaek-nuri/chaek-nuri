@@ -1,7 +1,4 @@
-  /* ----------------------------------------------
-   * 도서 데이터 샘플 (서버 없이 클라이언트 데이터베이스 대체용)
-   * 실제 프로젝트 시 서버 연동 가능
-   * -------------------------------------------- */
+  /* 데이터 베이스 대체용 도서 샘플 변수 선언 const는 내부 값을 변경할 수 없음 */
    const books = [
     { id:1, title:"데미안", author:"헤르만 헤세", category:"소설", price:12000, img:"https://image.yes24.com/goods/97903156/XL", description:"자아를 찾아가는 성장 소설의 대표작.", bestseller:false, recommended:true },
     { id:2, title:"아침의 피아노", author:"김영하", category:"소설", price:15000, img:"https://image.yes24.com/goods/10333668/XL", description:"감성 가득한 단편 소설집.", bestseller:false, recommended:false },
@@ -42,7 +39,7 @@
     { id:32, title:"하버드 경영전략", author:"아일린 슈랭거", category:"경제/경영", price:26000, img:"https://via.placeholder.com/150?text=하버드+경영전략",description:"하버드 사례로 배우는 전략 기법.",bestseller:false,recommended:false}
   ];
 
-  let cart = [];
+  let cart = []; // 장바구니 
 
   function updateCartCount() {
     document.getElementById('cartCount').textContent = cart.length;

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" /> <!-- 인코딩 방식 설정 -->
+  <title>책누리</title>
+  <link rel="stylesheet" href="project.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="project.js"></script>
+</head>
+<body>  
+
+  <!-- 배너 -->
+    <div class="banner">
+      <h1 id="slogan">책, 책, 책, 책 팔아요.</h1>
+    </div>
+    
+  <!-- 헤더 영역: 로고, 검색, 사용자 버튼 -->
+  <header>
+    <div class="logo"><a href="project.html">책누리</a></div>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="책 제목을 검색하세요" />
+      <button id="searchBtn" onclick="openSearchModal()">검색</button>
+    </div>
+    <div class="user-buttons">
+      <button id="loginBtn" onclick="openLoginModal()">로그인</button>
+      <button id="logoutBtn" style="display:none;" onclick="logout()">로그아웃</button>
+      <button id="myInfoBtn" onclick="openMyInfoModal()">나의 정보</button>
+    </div>
+  </header>
+
+  <!-- 네비게이션: 카테고리 메뉴 -->
+  <nav>
+    <div class="category"><a href="page_novel.html" class="category">소설</a></div>
+    <div class="category"><a href="page_self-improvement.html" class="category">자기계발</a></div>
+    <div class="category"><a href="page_humanities.html">인문학</a></div>
+    <div class="category"><a href="page_IT.html">컴퓨터/IT</a></div>
+    <div class="category"><a href="page_kid.html">어린이</a></div>
+    <div class="category"><a href="page_economy.html">경제/경영</a></div>
+  </nav>
+
+  <!-- 메인 도서 리스트 섹션 -->
+  <section id="categorySections">
+    <h2 class="section-title">소설</h2>
+    <div class="book-list" id="category-소설">
+    <div class="category" ="openCategoryModal('소설')"></div>
+      <!-- JS가 도서 목록을 이곳에 렌더링 -->
+    </div>
+  </section>
+
+  <!-- 검색 결과 모달 -->
+  <div class="modal-overlay" id="searchModal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeSearchModal()">×</button>
+      <h3>검색 결과</h3>
+      <div id="searchResults">
+        <!-- 검색된 도서 정보가 여기에 표시됩니다 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 카테고리별 도서 모달 -->
+  <div class="modal-overlay" id="categoryModal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeCategoryModal()">×</button>
+      <h3 id="categoryTitle">카테고리</h3>
+      <div id="categoryResults">
+        <!-- 선택한 카테고리 도서가 여기에 표시됩니다 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 로그인 모달 -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal" id="loginPopup">
+      <button class="close-btn" onclick="closeLoginModal()">×</button>
+      <h3>로그인</h3>
+      <label for="userId">아이디</label>
+      <input type="text" id="userId" placeholder="아이디를 입력하세요" />
+      <label for="userPwd">비밀번호</label>
+      <input type="password" id="userPwd" placeholder="비밀번호를 입력하세요" />
+      <button class="login-submit" onclick="login()">로그인</button>
+    </div>
+  </div>
+
+  <!-- 나의 정보 모달 -->
+  <div class="modal-overlay" id="myInfoModal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeMyInfoModal()">×</button>
+      <h3>나의 정보</h3>
+      <p><strong>아이디:</strong> <span id="infoUserId"></span></p>
+      <p><strong>대여 중인 eBook:</strong></p>
+      <ul id="borrowedEBooks">
+        <!-- 대여중인 eBook 리스트 -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- 카트 정보 모달 -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal">
+        <button class="close-btn" onclick="closeCartModal()">×</button>
+        <h3>장바구니</h3>
+        <div id="cartItems"></div>
+        <div style="margin-top:15px; text-align:right;">
+          <strong>총 합계: <span id="cartTotal">0</span>원</strong>
+        </div>
+        <div class="modal-footer-btns" style="margin-top:15px;">
+          <button onclick="checkout()">구매하기</button>
+          <button onclick="closeCartModal()">닫기</button>
+        </div> 
+  </div> 
+
+  <!-- 푸터 -->
+  <footer>
+    <p>© 2025 책누리. 모든 권리 보유.</p>
+    <p>문의 전화: 02-1234-5678 | 이메일: help@chaeknuri.co.kr</p>
+  </footer>
+</body>
+</html>
+
