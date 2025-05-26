@@ -21,7 +21,12 @@
       color: white;
       top: 0;
       text-align: center;
-      padding: 20px;
+      padding: 5px;
+    }
+
+    .banner h1 {
+      opacity: 0;
+      font-size: 2em;
     }
 
     /* 헤더 스타일 */
@@ -249,6 +254,17 @@
     }
 
     /* 도서 리스트 스타일 */
+    .scroll-wrapper {
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 10px;
+    }
+
+    .horizontal-scroll {
+      display: flex;
+      gap: 12px; /* 책 카드 간 간격 */
+    }
+
     section {
       max-width: 1200px;
       margin: 20px auto 40px;
@@ -281,11 +297,8 @@
       cursor: pointer;
       transition: transform 0.2s ease;
       border: 1px solid #ddd;
-    }
-
-    .book:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+      flex: 0 0 auto; /* 크기 고정 */
+      padding: 10px;
     }
 
     .book img {
@@ -333,8 +346,8 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .add-cart-btn:hover {
-      background-color: #7faeed;
+    .add-cart-btn:active {
+      background-color: #70a2e2;
     }
 
     /* 푸터 스타일 */

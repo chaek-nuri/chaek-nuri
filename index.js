@@ -1,19 +1,19 @@
   /* 데이터 베이스 대체용 도서 샘플 변수 선언 const는 내부 값을 변경할 수 없음 */
    const books = [
     { id:1, title:"데미안", author:"헤르만 헤세", category:"소설", price:12000, img:"https://image.yes24.com/goods/97903156/XL", description:"자아를 찾아가는 성장 소설의 대표작.", bestseller:false, recommended:true },
-    { id:2, title:"아침의 피아노", author:"김영하", category:"소설", price:15000, img:"https://image.yes24.com/goods/10333668/XL", description:"감성 가득한 단편 소설집.", bestseller:false, recommended:false },
+    { id:2, title:"아침의 피아노", author:"김영하", category:"소설", price:15000, img:"https://image.yes24.com/goods/10333668/XL", description:"감성 가득한 단편 소설집.", bestseller:false, recommended:true },
     { id:8, title:"노르웨이의 숲", author:"무라카미 하루키", category:"소설", price:14000, img:"https://via.placeholder.com/150?text=노르웨이의+숲", description:"청춘의 고독과 사랑을 그린 소설.", bestseller:true, recommended:false },
     { id:9, title:"해리 포터와 마법사의 돌", author:"J.K. 롤링", category:"소설", price:20000, img:"https://via.placeholder.com/150?text=해리+포터", description:"마법 세계의 시작을 알린 판타지 소설.", bestseller:true, recommended:true },
-    { id:10, title:"채식주의자", author:"한강", category:"소설", price:13000, img:"https://via.placeholder.com/150?text=채식주의자", description:"강렬한 상징으로 한국 사회를 비판.", bestseller:false, recommended:false },
+    { id:10, title:"채식주의자", author:"한강", category:"소설", price:13000, img:"https://via.placeholder.com/150?text=채식주의자", description:"강렬한 상징으로 한국 사회를 비판.", bestseller:false, recommended:true },
     { id:11, title:"82년생 김지영", author:"조남주", category:"소설", price:15000, img:"https://via.placeholder.com/150?text=82년생+김지영", description:"한국 여성의 삶을 그린 소설.", bestseller:true, recommended:false },
 
     { id:3, title:"미움받을 용기", author:"기시미 이치로", category:"자기계발", price:13000, img:"https://image.yes24.com/goods/42983090/XL", description:"행복한 삶을 위한 아들러 심리학 입문서.", bestseller:false, recommended:true },
-    { id:12, title:"아침형 인간", author:"하루 1시간", category:"자기계발", price:16000, img:"https://via.placeholder.com/150?text=아침형+인간", description:"생산성을 높이는 습관 형성 가이드.", bestseller:false, recommended:false },
+    { id:12, title:"아침형 인간", author:"하루 1시간", category:"자기계발", price:16000, img:"https://via.placeholder.com/150?text=아침형+인간", description:"생산성을 높이는 습관 형성 가이드.", bestseller:false, recommended:true },
     { id:13, title:"그릿", author:"앤절라 더크워스", category:"자기계발", price:18000, img:"https://via.placeholder.com/150?text=그릿", description:"성공을 이끄는 집중력과 끈기에 대하여.", bestseller:true, recommended:false },
-    { id:14, title:"원씽", author:"게리 켈러", category:"자기계발", price:17000, img:"https://via.placeholder.com/150?text=원씽", description:"가장 중요한 것에 집중하는 법.", bestseller:false, recommended:false },
-    { id:15, title:"작은 습관의 힘", author:"제임스 클리어", category:"자기계발", price:19000, img:"https://via.placeholder.com/150?text=작은+습관", description:"습관 변화의 심리학과 실행 전략.", bestseller:false, recommended:false },
+    { id:14, title:"원씽", author:"게리 켈러", category:"자기계발", price:17000, img:"https://via.placeholder.com/150?text=원씽", description:"가장 중요한 것에 집중하는 법.", bestseller:false, recommended:true },
+    { id:15, title:"작은 습관의 힘", author:"제임스 클리어", category:"자기계발", price:19000, img:"https://via.placeholder.com/150?text=작은+습관", description:"습관 변화의 심리학과 실행 전략.", bestseller:false, recommended:true },
 
-    { id:4, title:"아가페 인문학", author:"김철수", category:"인문학", price:18000, img:"https://via.placeholder.com/150?text=아가페+인문학", description:"사랑과 인문학의 만남을 다룬 책.", bestseller:false, recommended:false },
+    { id:4, title:"아가페 인문학", author:"김철수", category:"인문학", price:18000, img:"https://via.placeholder.com/150?text=아가페+인문학", description:"사랑과 인문학의 만남을 다룬 책.", bestseller:false, recommended:true },
     { id:16, title:"총, 균, 쇠", author:"재레드 다이아몬드", category:"인문학", price:22000, img:"https://via.placeholder.com/150?text=총,+균,+쇠", description:"문명의 발전을 과학적으로 분석.", bestseller:true, recommended:false },
     { id:17, title:"사피엔스", author:"유발 하라리", category:"인문학", price:21000, img:"https://via.placeholder.com/150?text=사피엔스", description:"인류 역사를 통찰하는 통합적 시각.", bestseller:true, recommended:true },
     { id:18, title:"호모 데우스", author:"유발 하라리", category:"인문학", price:20000, img:"https://via.placeholder.com/150?text=호모+데우스", description:"미래 인류의 가능성 탐구.", bestseller:false, recommended:false },
@@ -62,6 +62,11 @@
           <p class="price">${book.price.toLocaleString()}원</p>
           <button class="add-cart-btn" onclick="addToCart(${book.id})">장바구니 담기</button>
         </div>`;
+      // 클릭 시 상세 모달 열기 (검색 결과, 카테고리와 동일 UI 활용 가능)
+      bookDiv.addEventListener('click', () => {
+        openBookDetailModal(book);
+      });
+
       container.appendChild(bookDiv);
     });
   }
@@ -289,4 +294,7 @@
   window.onload = function () {
     renderBookList();
     updateLoginState();
+    $('#slogan').animate({
+      opacity: 1
+    }, 3000);
   };
