@@ -73,7 +73,12 @@
 
   function renderBookList() {
     renderSection('mainBookList', book => book.recommended);
-    renderSection('novelBookList', book => book.category === "소설");
+    renderSection('novelList', book => book.category === "소설");
+    renderSection('selfList', book => book.category === "자기계발");
+    renderSection('humanitiesList', book => book.category === "인문학");
+    renderSection('ITList', book => book.category === "컴퓨터/IT");
+    renderSection('kidList', book => book.category === "어린이"); 
+    renderSection('economyList', book => book.category === "경제/경영");
     renderSection('bestsellerList', book => book.bestseller);
   }
 

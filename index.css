@@ -262,7 +262,7 @@
 
     .horizontal-scroll {
       display: flex;
-      gap: 12px; /* 책 카드 간 간격 */
+      gap: 20px; /* 책 카드 간 간격 */
     }
 
     section {
